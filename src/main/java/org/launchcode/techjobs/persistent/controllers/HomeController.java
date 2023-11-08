@@ -61,13 +61,12 @@ public class HomeController {
             return "add";
         }
         Optional<Employer> result = employerRepository.findById(employerId);
-        if (result.isPresent()) {
-            Employer employer = result.get();
+        Employer employer = result.orElseGet(Employer::new);
             List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
             newJob.setSkills(skillObjs);
             newJob.setEmployer(employer);
             jobRepository.save(newJob);
-        }
+
         return "redirect:";
     }
 
